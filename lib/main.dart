@@ -13,8 +13,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      //home: Splashview(),
-      home: Videofile(),
+      home: Splashview(),
+     // home: Videofile(),
       debugShowCheckedModeBanner: false,
     );
   }

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:skysync/utls/allColor.dart';
 import 'package:skysync/utls/all_Image.dart';
@@ -104,144 +105,313 @@ class _AllforecastviewState extends State<Allforecastview> {
                   children: [
                     Expanded(
                       flex: 6,
-                      child: Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25.0),
-                          gradient: LinearGradient(
-                            colors: [
-                              Allcolor.fastcolor.withAlpha(180),
-                              Allcolor.secondcolort.withAlpha(180),
-                              Allcolor.thardcolor.withAlpha(180),
-                            ],
-                          ),
-                        ),
-                        child: forcustMap == null
-                            ? Center(child: CircularProgressIndicator())
-                            : Padding(
+                      child: forcustMap == null
+                          ? Center(
+                              child: Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(25.0),
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Allcolor.fastcolor.withAlpha(180),
+                                      Allcolor.secondcolort.withAlpha(180),
+                                      Allcolor.thardcolor.withAlpha(180),
+                                    ],
+                                  ),
+                                ),
+
+                                child: Padding(
+                                  padding: const EdgeInsets.all(68.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "description......",
+                                        style: GoogleFonts.iansui(
+                                          fontSize: 21.0,
+                                          color: Allcolor.whitecolor,
+                                        ),
+                                      ),
+                                      Text(
+                                        "Humidity......",
+                                        style: GoogleFonts.iansui(
+                                          fontSize: 21.0,
+                                          color: Allcolor.whitecolor,
+                                        ),
+                                      ),
+                                      Text(
+                                        "Pressure......",
+                                        style: GoogleFonts.iansui(
+                                          fontSize: 21.0,
+                                          color: Allcolor.whitecolor,
+                                        ),
+                                      ),
+                                      Text(
+                                        "feels_like......",
+                                        style: GoogleFonts.iansui(
+                                          fontSize: 21.0,
+                                          color: Allcolor.whitecolor,
+                                        ),
+                                      ),
+                                      Text(
+                                        "sea_level......",
+                                        style: GoogleFonts.iansui(
+                                          fontSize: 21.0,
+                                          color: Allcolor.whitecolor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            )
+                          : Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25.0),
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Allcolor.fastcolor.withAlpha(180),
+                                    Allcolor.secondcolort.withAlpha(180),
+                                    Allcolor.thardcolor.withAlpha(180),
+                                  ],
+                                ),
+                              ),
+                              child: Padding(
                                 padding: const EdgeInsets.all(18.0),
-                                child: Column(
+                                child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      "${forcustMap!['list'][1]['weather'][0]['description']}",
-                                      style: GoogleFonts.aBeeZee(
-                                        fontSize: 21.0,
+                                    Expanded(
+                                      flex: 10,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    "${forcustMap!['list'][1]['weather'][0]['description']}",
+                                                    style: GoogleFonts.aBeeZee(
+                                                      fontSize: 21.0,
+                                                      color:
+                                                          Allcolor.whitecolor,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    "Humidity is : ${forcustMap!['list'][0]['main']['humidity']}%",
+                                                    style: GoogleFonts.iansui(
+                                                      fontSize: 21.0,
+                                                      color:
+                                                          Allcolor.whitecolor,
+                                                    ),
+                                                  ),
+
+                                                  Text(
+                                                    "pressure is : ${forcustMap!['list'][0]['main']['pressure']}hPa",
+                                                    style: GoogleFonts.iansui(
+                                                      fontSize: 21.0,
+                                                      color:
+                                                          Allcolor.whitecolor,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    "feels_like is : ${(forcustMap!['list'][0]['main']['feels_like'] - 273.15).toStringAsFixed(2)}°C",
+                                                    style: GoogleFonts.iansui(
+                                                      fontSize: 21.0,
+                                                      color:
+                                                          Allcolor.whitecolor,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    "sea_level ia : ${forcustMap!['list'][0]['main']['sea_level']}hpa",
+                                                    style: GoogleFonts.iansui(
+                                                      fontSize: 21.0,
+                                                      color:
+                                                          Allcolor.whitecolor,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 200,
+                                      width: 1,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
                                         color: Allcolor.whitecolor,
                                       ),
                                     ),
-                                    Image.network(
-                                      "https://openweathermap.org/img/wn/${forcustMap!["list"][1]["weather"][0]['icon']}@2x.png",
+                                    Expanded(
+                                      flex: 7,
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Image.network(
+                                            "https://openweathermap.org/img/wn/${forcustMap!["list"][1]["weather"][0]['icon']}@2x.png",
+
+                                            width: 180.0,
+                                            fit: BoxFit.cover,
+                                          ),
+
+                                          Text(
+                                            "Temp Is : ${(forcustMap!['list'][0]['main']['temp'] - 273.15).toStringAsFixed(1)}°C",
+                                            style: GoogleFonts.iansui(
+                                              fontSize: 21.0,
+                                              color: Allcolor.whitecolor,
+                                            ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
-                      ),
+                            ),
                     ),
                     SizedBox(height: 10),
                     Expanded(
                       flex: 11,
-                      child:  Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25.0),
-                                gradient: LinearGradient(tileMode: TileMode.mirror,
-                                  colors: [
-                                    Allcolor.fastcolor.withAlpha(180),
-                                    Allcolor.thardcolor.withAlpha(180),
-                                    Allcolor.secondcolort.withAlpha(180),
-                                  ],
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25.0),
+                          gradient: LinearGradient(
+                            tileMode: TileMode.mirror,
+                            colors: [
+                              Allcolor.fastcolor.withAlpha(180),
+                              Allcolor.thardcolor.withAlpha(180),
+                              Allcolor.secondcolort.withAlpha(180),
+                            ],
+                          ),
+                        ),
+                        child: forcustMap == null
+                            ? Center(
+                                child: Text(
+                                  "Loading...",
+                                  style: GoogleFonts.radioCanada(
+                                    fontSize: 21.0,
+                                    color: Allcolor.whitecolor,
+                                  ),
                                 ),
-                              ),
-                              child: ListView.builder(
+                              )
+                            : ListView.builder(
                                 itemCount: forcustMap!['list'].length,
                                 shrinkWrap: true,
                                 scrollDirection: Axis.vertical,
 
                                 itemBuilder: (context, index) {
+                                  var item = forcustMap!['list'][index];
+                                  String formatTime(
+                                    int timestamp,
+                                    int timezoneOffset,
+                                  ) {
+                                    DateTime date =
+                                        DateTime.fromMillisecondsSinceEpoch(
+                                          timestamp * 1000,
+                                          isUtc: true,
+                                        ).add(
+                                          Duration(seconds: timezoneOffset),
+                                        );
+
+                                    return "${date.hour % 12 == 0 ? 12 : date.hour % 12}:"
+                                        "${date.minute.toString().padLeft(2, '0')} "
+                                        "${date.hour >= 12 ? "PM" : "AM"}";
+                                  }
+
                                   return Padding(
                                     padding: const EdgeInsets.only(
-                                      bottom: 8.0,
-                                      left: 10,
+                                      left: 10.0,
+                                      right: 10,
+                                      top: 10,
+                                      bottom: 10,
                                     ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        Container(
-                                          height: 190.0,
-                                          width: 100,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(
-                                              20.0,
-                                            ),
-                                            gradient: LinearGradient(
-                                              colors: [
-                                                Allcolor.fastcolor,
-                                                Allcolor.secondcolort,
-                                                Allcolor.thardcolor,
-                                              ],
-                                              tileMode: TileMode.mirror,
-                                              end: AlignmentGeometry
-                                                  .bottomCenter,
-                                              begin:
-                                                  AlignmentGeometry.topCenter,
-                                              transform: GradientRotation(25.0),
-                                            ),
-                                          ),
+                                    child: Container(
+                                      height: 150,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                          20.0,
                                         ),
-                                        SizedBox(width: 15.0),
-                                        Container(
-                                          height: 190.0,
-                                          width: 100,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(
-                                              20.0,
-                                            ),
-                                            gradient: LinearGradient(
-                                              colors: [
-                                                Allcolor.fastcolor,
-                                                Allcolor.secondcolort,
-                                                Allcolor.thardcolor,
-                                              ],
-                                              tileMode: TileMode.mirror,
-                                              end: AlignmentGeometry
-                                                  .bottomCenter,
-                                              begin:
-                                                  AlignmentGeometry.topCenter,
-                                              transform: GradientRotation(25.0),
-                                            ),
-                                          ),
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            Allcolor.thardcolor,
+                                            Allcolor.secondcolort,
+                                            Allcolor.fastcolor,
+                                          ],
+                                          tileMode: TileMode.clamp,
                                         ),
-                                        SizedBox(width: 15.0),
-                                        Container(
-                                          height: 190.0,
-                                          width: 100,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(
-                                              20.0,
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(18.0),
+                                        child: Row(
+                                          children: [
+                                            Expanded(
+                                              flex: 12,
+                                              child: Column(
+                                                children: [
+                                                  Text(
+                                                    "Temp :${(item['main']['temp'] - 273.15).toStringAsFixed(2)}°C",
+                                                    style: GoogleFonts.iansui(
+                                                      fontSize: 21.0,
+                                                      color:
+                                                          Allcolor.whitecolor,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    "Speed :${(item['wind']['speed']).toStringAsFixed(2)}m/s",
+                                                    style: GoogleFonts.iansui(
+                                                      fontSize: 21.0,
+                                                      color:
+                                                          Allcolor.whitecolor,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    "Time :${formatTime(item["dt"], forcustMap!["city"]["timezone"] ?? 0)}",
+                                                    style: GoogleFonts.iansui(
+                                                      fontSize: 21.0,
+                                                      color:
+                                                          Allcolor.whitecolor,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                            gradient: LinearGradient(
-                                              colors: [
-                                                Allcolor.fastcolor,
-                                                Allcolor.secondcolort,
-                                                Allcolor.thardcolor,
-                                              ],
-                                              tileMode: TileMode.mirror,
-                                              end: AlignmentGeometry
-                                                  .bottomCenter,
-                                              begin:
-                                                  AlignmentGeometry.topCenter,
-                                              transform: GradientRotation(25.0),
+
+                                            Expanded(
+                                              flex: 7,
+                                              child: Column(
+                                                children: [
+                                                  Image.network(
+                                                    "https://openweathermap.org/img/wn/${forcustMap!["list"][1]["weather"][0]['icon']}@4x.png",
+                                                    height: 110,
+                                                    width: 200,
+                                                    fit: BoxFit.scaleDown,
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ),
+                                          ],
                                         ),
-                                      ],
+                                      ),
                                     ),
                                   );
                                 },
                               ),
-                            ),
+                      ),
                     ),
                   ],
                 ),
